@@ -1,15 +1,14 @@
 const path = require('path');
 const { createLogger, format, transports } = require('winston');
-const { logsDirectory } = require('../config');
+const { logLevel, logsDirectory, nodeEnv } = require('../config');
 
 const { combine, timestamp } = format;
-const { env } = process;
 
 // TODO: Move out
 // const serviceName = 'availability-checker';
 
 const logger = createLogger({
-    level: 'info',
+    level: logLevel,
     format: combine(timestamp(), format.json()),
     // defaultMeta: { service: serviceName },
     transports: [
@@ -19,26 +18,26 @@ const logger = createLogger({
         //
         new transports.File({
             filename: path.join(logsDirectory, 'error.log'),
-            level: 'error'
+            level: 'error',
         }),
         new transports.File({
-            filename: path.join(logsDirectory, 'combined.log')
-        })
-    ]
+            filename: path.join(logsDirectory, 'combined.log'),
+        }),
+    ],
 });
 
 //
 // If we're not in production then log to the `console` with the format:
 // `${info.level}: ${info.message} JSON.stringify({ ...rest }) `
 //
-if (env.NODE_ENV !== 'production') {
+if (nodeEnv !== 'production') {
     logger.add(
         new transports.Console({
-            format: format.simple()
+            format: format.simple(),
         })
     );
 }
 
 module.exports = {
-    logger
+    logger,
 };

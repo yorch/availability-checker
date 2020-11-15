@@ -6,13 +6,8 @@ class Walmart extends BaseScrapper {
     parseHtml($) {
         const $productOverview = $('#product-overview');
         const title = $('h1.prod-ProductTitle', $productOverview).text();
-        const price = $('span[itemprop="price"]', $productOverview).attr(
-            'content'
-        );
-        const availability = $(
-            'link[itemprop="availability"]',
-            $productOverview
-        ).attr('href');
+        const price = $('span[itemprop="price"]', $productOverview).attr('content');
+        const availability = $('link[itemprop="availability"]', $productOverview).attr('href');
         const sku = $('meta[itemprop="sku"]', $productOverview).attr('content');
 
         return {

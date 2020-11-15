@@ -12,29 +12,16 @@ class AvailabilityChecker {
     }
 
     _composeMessages(products) {
-        return (
-            products
-                // .filter(({ isAvailable }) => isAvailable)
-                .map(
-                    ({
-                        name,
-                        title,
-                        availability,
-                        isAvailable,
-                        price,
-                        sku,
-                        source,
-                        url
-                    }) => oneLine`
+        return products.map(
+            ({ name, title, availability, isAvailable, price, sku, source, url }) => oneLine`
                             ${name}
                             (${source}):
-                            ${isAvailable ? 'available' : 'not available'}
+                            ${isAvailable ? 'Available' : 'Not Available'}
                             (${availability})
                             ==>
                             ${price}
                             (${url})
                         `
-                )
         );
     }
 
@@ -43,23 +30,20 @@ class AvailabilityChecker {
             const scrapper = new Scrapper({ logger: this.logger });
             const { name } = scrapper;
             this.logger.info(`Processing ${name}`);
-            const res = await scrapper.run(
-                products.filter(({ source_name }) => name === source_name)
-            );
+            const res = await scrapper.run(products.filter(({ source_name }) => name === source_name));
             this.logger.info(`Finished processing ${name}`);
             return res;
         });
 
-        const allProducts = (await Promise.all(promises))
-            .flat()
-            .filter(Boolean);
+        const allProducts = (await Promise.all(promises)).flat().filter(Boolean);
 
         if (!allProducts || allProducts.length === 0) {
             this.logger.error('Could not process any product');
         } else {
-            this.logger.info(`Processed ${allProducts.length} products`);
-
-            const messages = this._composeMessages(allProducts);
+            this.logger.info(allProducts);
+            const availableProducts = allProducts.filter(({ isAvailable }) => isAvailable);
+            this.logger.info(`Processed ${allProducts.length} products (${availableProducts.length} available)`);
+            const messages = this._composeMessages(availableProducts);
 
             // TODO: Maybe consolidate multiple messages into same action (ie: same email)
             messages.forEach((message) => {
@@ -93,5 +77,5 @@ class AvailabilityChecker {
 }
 
 module.exports = {
-    AvailabilityChecker
+    AvailabilityChecker,
 };
