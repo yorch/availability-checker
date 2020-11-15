@@ -5,16 +5,13 @@ class BestBuy extends BaseDynamicScrapper {
     name = 'bestbuy';
 
     async parseHtml($) {
-        const title = await (await $('[itemprop=name]')).textContent();
-        const price = await (await $('.priceView-customer-price [aria-hidden="true"]')).textContent();
         const availability = await (await $('.add-to-cart-button')).textContent();
-        const sku = await (await $('div.sku.product-data .product-data-value')).textContent();
 
         return {
-            title,
+            title: await (await $('[itemprop=name]')).textContent(),
             availability,
-            price,
-            sku,
+            price: await (await $('.priceView-customer-price [aria-hidden="true"]')).textContent(),
+            sku: await (await $('div.sku.product-data .product-data-value')).textContent(),
             isAvailable: availability !== 'Sold Out',
         };
     }

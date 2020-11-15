@@ -10,6 +10,10 @@ class BaseScrapper {
 
     async postAll() {}
 
+    trimString(str) {
+        return (str || '').trim().replace(/\n/g, '');
+    }
+
     async obtainProduct({ name, url }) {
         this.logger.debug(`Making request to ${url}`);
         try {

@@ -4,11 +4,10 @@ class Amazon extends BaseScrapper {
     name = 'amazon';
 
     parseHtml($) {
-        const title = $('#productTitle').text().trim();
-        const availability = $('#availability').text().trim();
+        const availability = this.trimString($('#availability').text());
 
         return {
-            title,
+            title: this.trimString($('#productTitle').text()),
             availability,
             price: '',
             sku: '',
