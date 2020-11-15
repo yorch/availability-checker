@@ -1,10 +1,7 @@
 module.exports = {
     arrowParens: 'always',
     bracketSpacing: true,
-    semi: true,
-    singleQuote: true,
-    trailingComma: 'es5',
-    tabWidth: 4,
+    editorconfig: true,
     overrides: [
         {
             files: '*.json',
@@ -19,5 +16,9 @@ module.exports = {
             },
         },
     ],
-    editorconfig: true,
+    printWidth: 120,
+    semi: true,
+    singleQuote: true,
+    trailingComma: 'es5',
+    tabWidth: 4,
 };
