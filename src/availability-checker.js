@@ -14,14 +14,14 @@ class AvailabilityChecker {
     _composeMessages(products) {
         return products.map(
             ({ name, title, availability, isAvailable, price, sku, source, url }) => oneLine`
-                            ${name}
-                            (${source}):
-                            ${isAvailable ? 'Available' : 'Not Available'}
-                            (${availability})
-                            ==>
-                            ${price}
-                            (${url})
-                        `
+                ${name}
+                (${source}):
+                ${isAvailable ? 'Available' : 'Not Available'}
+                (${availability})
+                ==>
+                ${price}
+                (${url})
+            `
         );
     }
 
@@ -48,9 +48,7 @@ class AvailabilityChecker {
             // TODO: Maybe consolidate multiple messages into same action (ie: same email)
             messages.forEach((message) => {
                 this.logger.info(message);
-                this.actions.forEach(async (action) => {
-                    await action({ content: message, logger: this.logger });
-                });
+                this.actions.forEach((action) => action({ content: message, logger: this.logger }));
             });
         }
     }
