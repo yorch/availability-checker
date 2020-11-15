@@ -3,7 +3,7 @@ version: '3.7'
 services:
   node:
     build: .
-    container_name: ovh-availability-checker
+    container_name: availability-checker
     restart: unless-stopped
     volumes:
       - logs:/app/logs

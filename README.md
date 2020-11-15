@@ -1,11 +1,11 @@
-# OVH Availability Checker
+# Availability Checker
 
-[![Build Status](https://travis-ci.org/yorch/ovh-availability-checker.svg?branch=master)](https://travis-ci.org/yorch/ovh-availability-checker)
-[![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=yorch/ovh-availability-checker)](https://dependabot.com)
-[![](https://images.microbadger.com/badges/image/yorch/ovh-availability-checker.svg)](https://microbadger.com/images/yorch/ovh-availability-checker)
-[![](https://images.microbadger.com/badges/version/yorch/ovh-availability-checker.svg)](https://microbadger.com/images/yorch/ovh-availability-checker)
+[![Build Status](https://travis-ci.org/yorch/availability-checker.svg?branch=master)](https://travis-ci.org/yorch/availability-checker)
+[![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=yorch/availability-checker)](https://dependabot.com)
+[![](https://images.microbadger.com/badges/image/yorch/availability-checker.svg)](https://microbadger.com/images/yorch/availability-checker)
+[![](https://images.microbadger.com/badges/version/yorch/availability-checker.svg)](https://microbadger.com/images/yorch/availability-checker)
 
-This is a NodeJS application that checks for the availability of OVH / Kimsufi / SoYouStart servers (according to `servers.json` config file) and if they are in stock, it can trigger:
+This is a NodeJS application that checks for the availability of products across differnent sources (according to `products.json` config file) and if they are in stock, it can trigger:
 
 -   An email through a configured SMTP server.
 -   An SMS message through Twilio.
@@ -16,7 +16,7 @@ This is a NodeJS application that checks for the availability of OVH / Kimsufi /
 All the configuration can be made through two files:
 
 -   `.env` -> Where all the credentials and other config are stored (ie: SMTP, Twilio API, Pushbullet, etc). Create your own `.env` file from `.env.sample`.
--   `servers.json` -> Where you can add the OVH / Kimsufi / SoYouStart servers you want to monitor.
+-   `products.json` -> Where you can add the products you want to monitor.
 
 ## Run with NodeJS
 

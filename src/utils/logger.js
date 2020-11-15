@@ -6,7 +6,7 @@ const { combine, timestamp } = format;
 const { env } = process;
 
 // TODO: Move out
-// const serviceName = 'ovh-availability-checker';
+// const serviceName = 'availability-checker';
 
 const logger = createLogger({
     level: 'info',
