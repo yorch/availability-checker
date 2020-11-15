@@ -28,5 +28,15 @@
     "name": "PlayStation 5 Digital Edition",
     "url": "https://www.gamestop.com/video-games/playstation-5/consoles/products/playstation-5-digital-edition/11108141.html",
     "source_name": "gamestop"
+  },
+  {
+    "name": "PlayStation 5 Console",
+    "url": "https://www.amazon.com/PlayStation-5-Console/dp/B08FC5L3RG?ref_=ast_sto_dp",
+    "source_name": "amazon"
+  },
+  {
+    "name": "PlayStation 5 Digital Edition",
+    "url": "https://www.amazon.com/PlayStation-5-Digital/dp/B08FC6MR62?ref_=ast_sto_dp",
+    "source_name": "amazon"
   }
 ]
