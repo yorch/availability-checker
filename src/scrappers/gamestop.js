@@ -2,7 +2,6 @@ const { BaseScrapper } = require('./base-scrapper');
 
 class GameStop extends BaseScrapper {
     name = 'gamestop';
-    baseUrl = 'gamestop.com';
 
     parseHtml($) {
         const title = $('[itemprop="name"]').text();

@@ -23,7 +23,8 @@ class BaseScrapper {
                 ...this.parseHtml($document),
             };
         } catch (error) {
-            this.logger.error(error);
+            console.error(error);
+            // this.logger.error(error);
         }
     }
 

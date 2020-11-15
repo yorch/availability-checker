@@ -40,7 +40,7 @@ class AvailabilityChecker {
         if (!allProducts || allProducts.length === 0) {
             this.logger.error('Could not process any product');
         } else {
-            this.logger.info(allProducts);
+            this.logger.info(JSON.stringify(allProducts, null, 2));
             const availableProducts = allProducts.filter(({ isAvailable }) => isAvailable);
             this.logger.info(`Processed ${allProducts.length} products (${availableProducts.length} available)`);
             const messages = this._composeMessages(availableProducts);

@@ -44,7 +44,8 @@ class BaseDynamicScrapper extends BaseScrapper {
             };
         } catch (error) {
             // TODO: Fix as this usually prints the error as undefined, have to use console.error
-            this.logger.error(error);
+            console.error(error);
+            // this.logger.error(error);
         } finally {
             page && (await page.close());
         }
