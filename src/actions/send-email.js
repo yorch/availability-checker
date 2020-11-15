@@ -5,8 +5,8 @@ const {
         from,
         smtp: { host, port, secure, user, pass },
         subject,
-        toEmail
-    }
+        toEmail,
+    },
 } = require('../config');
 
 const sendEmail = async ({ content, logger }) => {
@@ -20,8 +20,8 @@ const sendEmail = async ({ content, logger }) => {
         secure,
         auth: {
             user,
-            pass
-        }
+            pass,
+        },
     });
     try {
         const info = await transporter.sendMail({
@@ -29,7 +29,7 @@ const sendEmail = async ({ content, logger }) => {
             to: toEmail,
             subject,
             text: content,
-            html: content
+            html: content,
         });
         const { messageId } = info;
 
@@ -45,5 +45,5 @@ const sendEmail = async ({ content, logger }) => {
 };
 
 module.exports = {
-    sendEmail
+    sendEmail,
 };

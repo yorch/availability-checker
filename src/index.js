@@ -10,7 +10,7 @@ const { BestBuy } = require('./scrappers/bestbuy');
 const availabilityChecker = new AvailabilityChecker({
     actions: [sendEmail, sendPushbullet, sendSms],
     logger,
-    scrappers: [Walmart, BestBuy]
+    scrappers: [Walmart, BestBuy],
 });
 
 if (cronSchedule) {

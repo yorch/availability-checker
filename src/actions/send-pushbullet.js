@@ -1,6 +1,6 @@
 const PushBullet = require('pushbullet');
 const {
-    pushbullet: { apiToken, enable, deviceId, noteTitle }
+    pushbullet: { apiToken, enable, deviceId, noteTitle },
 } = require('../config');
 
 const sendPushbullet = ({ content, logger }) => {
@@ -18,5 +18,5 @@ const sendPushbullet = ({ content, logger }) => {
 };
 
 module.exports = {
-    sendPushbullet
+    sendPushbullet,
 };

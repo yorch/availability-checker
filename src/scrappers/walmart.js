@@ -20,11 +20,11 @@ class Walmart extends BaseScrapper {
             availability,
             price,
             sku,
-            isAvailable: availability !== '//schema.org/OutOfStock'
+            isAvailable: availability !== '//schema.org/OutOfStock',
         };
     }
 }
 
 module.exports = {
-    Walmart
+    Walmart,
 };

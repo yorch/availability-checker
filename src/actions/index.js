@@ -5,5 +5,5 @@ const { sendSms } = require('./send-sms');
 module.exports = {
     sendEmail,
     sendPushbullet,
-    sendSms
+    sendSms,
 };
