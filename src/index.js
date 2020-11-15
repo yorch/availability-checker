@@ -7,12 +7,13 @@ const { cronSchedule } = require('./config');
 const { Amazon } = require('./scrappers/amazon');
 const { BestBuy } = require('./scrappers/bestbuy');
 const { GameStop } = require('./scrappers/gamestop');
+const { Target } = require('./scrappers/target');
 const { Walmart } = require('./scrappers/walmart');
 
 const availabilityChecker = new AvailabilityChecker({
     actions: [sendEmail, sendPushbullet, sendSms],
     logger,
-    scrappers: [Amazon, BestBuy, GameStop, Walmart],
+    scrappers: [Amazon, BestBuy, GameStop, Target, Walmart],
 });
 
 if (cronSchedule) {
