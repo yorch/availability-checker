@@ -3,19 +3,14 @@ require('dotenv').config();
 const { logger } = require('./utils/logger');
 const { AvailabilityChecker } = require('./availability-checker');
 const { sendEmail, sendPushbullet, sendSms } = require('./actions');
-const { availabilityUrl, cronSchedule } = require('./config');
-const serversToCheck = require('../servers.json');
-
-if (!availabilityUrl) {
-    logger.info('No availabilityUrl configured, exiting');
-    return;
-}
+const { cronSchedule } = require('./config');
+const { Walmart } = require('./scrappers/walmart');
+const { BestBuy } = require('./scrappers/bestbuy');
 
 const availabilityChecker = new AvailabilityChecker({
     actions: [sendEmail, sendPushbullet, sendSms],
     logger,
-    serversToCheck,
-    url: availabilityUrl
+    scrappers: [Walmart, BestBuy]
 });
 
 if (cronSchedule) {

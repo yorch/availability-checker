@@ -1,125 +1,69 @@
 const { oneLine } = require('common-tags');
 const cron = require('node-cron');
-const got = require('got');
-const { groupBy } = require('lodash');
-const { pick } = require('lodash/fp');
-
-const UNAVAILABLE_STATES = ['unavailable', 'unknown'];
+const products = require('./products.json');
 
 class AvailabilityChecker {
-    constructor({ actions, logger, serversToCheck, url }) {
+    constructor({ actions, logger, scrappers }) {
         this.actions = actions;
         this.logger = logger;
-        this.serversToCheck = Object.entries(serversToCheck).reduce(
-            (acc, [key, { enable, ...rest }]) => {
-                if (enable === true) {
-                    return {
-                        ...acc,
-                        [key]: rest
-                    };
-                }
-            },
-            {}
-        );
-        this.url = url;
+        this.scrappers = scrappers.filter(Boolean);
 
-        this.logger.debug('Servers to check', this.serversToCheck);
+        this.logger.debug('scrappers', this.scrappers);
     }
 
-    async _obtainAvailability() {
-        const start = new Date();
-        this.logger.info(`Obtaining availability from ${this.url}`);
-        const body = await got(this.url).json();
-        this.logger.info(
-            `Got response in ${(new Date() - start) / 1000} secs (length: ${
-                body.length
-            } chars)`
-        );
-        const grouped = groupBy(
-            body.filter(({ hardware }) =>
-                Object.keys(this.serversToCheck).includes(hardware)
-            ),
-            'hardware'
-        );
-
-        return grouped;
-    }
-
-    _processAvailabilityResponse(response) {
-        const servers = Object.entries(this.serversToCheck);
-        const getAvailability = (availabilityPerCode) =>
-            (availabilityPerCode || []).map(pick(['datacenters', 'region']));
-        const processAvailability = (availabilityPerCode) => {
-            const availability = getAvailability(availabilityPerCode);
-            const datacenters = [].concat(
-                ...availability.map(({ datacenters }) => datacenters)
-            );
-            return {
-                availability,
-                availableIn: datacenters
-                    .filter(
-                        ({ availability }) =>
-                            !UNAVAILABLE_STATES.includes(availability)
-                    )
-                    .map(({ datacenter }) => datacenter),
-                datacenters
-            };
-        };
-        return servers.map(([hardwareCode, { datacenters, ...rest }]) => ({
-            ...rest,
-            ...processAvailability(response[hardwareCode]),
-            code: hardwareCode
-        }));
-    }
-
-    _composeMessages(serversAvailable) {
-        return [].concat(
-            ...serversAvailable.map(
-                ({ availableIn, datacenters, name, cpu, ram, disk, price }) =>
-                    availableIn.map(
-                        (dc) => oneLine`
-                                ${name}
-                                (DC: ${dc}):
-                                ${cpu},
-                                ${ram},
-                                ${disk}
-                                ==>
-                                ${price}
-                                (
-                                    availability:
-                                    ${
-                                        datacenters.find(
-                                            ({ datacenter }) =>
-                                                datacenter === dc
-                                        ).availability
-                                    }
-                                )
-                            `
-                    )
-            )
+    _composeMessages(products) {
+        return (
+            products
+                // .filter(({ isAvailable }) => isAvailable)
+                .map(
+                    ({
+                        name,
+                        title,
+                        availability,
+                        isAvailable,
+                        price,
+                        sku,
+                        source,
+                        url
+                    }) => oneLine`
+                            ${name}
+                            (${source}):
+                            ${isAvailable ? 'available' : 'not available'}
+                            (${availability})
+                            ==>
+                            ${price}
+                            (${url})
+                        `
+                )
         );
     }
 
     async run() {
-        const availability = await this._obtainAvailability();
-        const processedAvailability = this._processAvailabilityResponse(
-            availability
-        );
-        const serversAvailable = processedAvailability.filter(
-            ({ availableIn }) => availableIn.length > 0
-        );
-        if (!serversAvailable || serversAvailable.length === 0) {
-            this.logger.info('No available servers');
-        } else {
-            const messages = this._composeMessages(serversAvailable);
+        const promises = this.scrappers.map(async (Scrapper) => {
+            const scrapper = new Scrapper({ logger: this.logger });
+            const { name } = scrapper;
+            this.logger.info(`Processing ${name}`);
+            const res = await scrapper.run(
+                products.filter(({ source_name }) => name === source_name)
+            );
+            this.logger.info(`Finished processing ${name}`);
+            return res;
+        });
 
-            // this.logger.info(JSON.stringify(availability, null, 2));
-            // this.logger.info(JSON.stringify(processed, null, 2));
-            // this.logger.info(JSON.stringify(serversAvailable, null, 2));
+        const allProducts = (await Promise.all(promises))
+            .flat()
+            .filter(Boolean);
+
+        if (!allProducts || allProducts.length === 0) {
+            this.logger.error('Could not process any product');
+        } else {
+            this.logger.info(`Processed ${allProducts.length} products`);
+
+            const messages = this._composeMessages(allProducts);
 
             // TODO: Maybe consolidate multiple messages into same action (ie: same email)
             messages.forEach((message) => {
-                this.logger.info(messages);
+                this.logger.info(message);
                 this.actions.forEach(async (action) => {
                     await action({ content: message, logger: this.logger });
                 });

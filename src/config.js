@@ -1,7 +1,6 @@
 const { env } = process;
 
 module.exports = {
-    availabilityUrl: env.AVAILABILITY_URL,
     cronSchedule: env.CRON_SCHEDULE,
     logsDirectory: env.LOGS_DIR || './logs',
     email: {
