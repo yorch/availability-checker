@@ -18,5 +18,15 @@
     "name": "Sony - PlayStation 5 Digital Edition Console",
     "url": "https://www.bestbuy.com/site/sony-playstation-5-digital-edition-console/6430161.p?skuId=6430161",
     "source_name": "bestbuy"
+  },
+  {
+    "name": "PlayStation 5",
+    "url": "https://www.gamestop.com/video-games/playstation-5/consoles/products/playstation-5/11108140.html",
+    "source_name": "gamestop"
+  },
+  {
+    "name": "PlayStation 5 Digital Edition",
+    "url": "https://www.gamestop.com/video-games/playstation-5/consoles/products/playstation-5-digital-edition/11108141.html",
+    "source_name": "gamestop"
   }
 ]

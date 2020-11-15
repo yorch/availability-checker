@@ -9,6 +9,7 @@ module.exports = {
         disableHeadless: Boolean(env.SCRAPPER_DISABLE_HEADLESS) || false,
         saveScreenshot: Boolean(env.SCRAPPER_SAVE_SCREENSHOT) || false,
         timeout: Number(env.SCRAPPER_TIMEOUT) || 30 * 1000,
+        // https://developers.whatismybrowser.com/useragents/explore/software_name/chrome/
         userAgent:
             env.SCRAPPER_USER_AGENT ||
             'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36',

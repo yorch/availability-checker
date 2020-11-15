@@ -4,13 +4,14 @@ const { logger } = require('./utils/logger');
 const { AvailabilityChecker } = require('./availability-checker');
 const { sendEmail, sendPushbullet, sendSms } = require('./actions');
 const { cronSchedule } = require('./config');
-const { Walmart } = require('./scrappers/walmart');
 const { BestBuy } = require('./scrappers/bestbuy');
+const { GameStop } = require('./scrappers/gamestop');
+const { Walmart } = require('./scrappers/walmart');
 
 const availabilityChecker = new AvailabilityChecker({
     actions: [sendEmail, sendPushbullet, sendSms],
     logger,
-    scrappers: [Walmart, BestBuy],
+    scrappers: [BestBuy, GameStop, Walmart],
 });
 
 if (cronSchedule) {
