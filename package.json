@@ -1,7 +1,7 @@
 {
-  "name": "ovh-availability-checker",
-  "version": "2.1.0",
-  "description": "OVH Servers Availability Checker",
+  "name": "availability-checker",
+  "version": "1.0.0",
+  "description": "Availability Checker",
   "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -9,14 +9,15 @@
   },
   "author": "Jorge Barnaby <jorge {dot} barnaby {at} gmail {dot} com",
   "license": "MIT",
-  "repository": "yorch/ovh-availability-checker",
+  "repository": "yorch/availability-checker",
   "dependencies": {
+    "cheerio": "1.0.0-rc.3",
     "common-tags": "1.8.0",
     "dotenv": "8.2.0",
     "got": "11.8.0",
     "lodash": "4.17.20",
     "node-cron": "2.0.3",
-    "nodemailer": "6.4.14",
+    "nodemailer": "6.4.16",
     "pushbullet": "2.4.0",
     "simple-sms-sender": "0.0.3",
     "winston": "3.3.3"
@@ -24,6 +25,6 @@
   "devDependencies": {},
   "engineStrict": true,
   "engines": {
-    "node": ">= 10.0.0"
+    "node": ">= 12.0.0"
   }
 }
