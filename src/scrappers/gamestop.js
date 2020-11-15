@@ -11,10 +11,10 @@ class GameStop extends BaseScrapper {
 
         return {
             title: this.trimString($('[itemprop="name"]').text()),
-            availability,
+            availability: availability.toLowerCase(),
             price: sellingPrice,
             sku,
-            isAvailable: availability !== 'Not Available',
+            isAvailable: availability.toLowerCase() !== 'not available',
         };
     }
 }
