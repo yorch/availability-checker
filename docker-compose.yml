@@ -8,6 +8,6 @@ services:
     volumes:
       - ./data:/app/data
       - ./logs:/app/logs
-      - ./products.json:/app/products.json
       - ./screenshots:/app/screenshots
+      - ./src/products.json:/app/products.json
     env_file: .env

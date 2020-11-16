@@ -10,8 +10,6 @@ class AvailabilityChecker {
         this.actions = actions;
         this.logger = logger;
         this.scrappers = scrappers.filter(Boolean);
-
-        this.logger.debug('scrappers', this.scrappers);
     }
 
     async run() {
