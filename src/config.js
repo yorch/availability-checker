@@ -8,7 +8,7 @@ module.exports = {
     scrapper: {
         disableHeadless: Boolean(env.SCRAPPER_DISABLE_HEADLESS) || false,
         saveScreenshot: Boolean(env.SCRAPPER_SAVE_SCREENSHOT) || false,
-        timeout: Number(env.SCRAPPER_TIMEOUT) || 30 * 1000,
+        timeout: Number(env.SCRAPPER_TIMEOUT) || 60 * 1000,
         // https://developers.whatismybrowser.com/useragents/explore/software_name/chrome/
         userAgent:
             env.SCRAPPER_USER_AGENT ||
