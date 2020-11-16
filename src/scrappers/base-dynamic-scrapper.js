@@ -41,7 +41,7 @@ class BaseDynamicScrapper extends BaseScrapper {
                 name,
                 source: this.name,
                 url,
-                message: this.composeMessage(product),
+                message: this.composeMessage({ ...product, name, source, url }),
                 ...product,
             };
         } catch (err) {
