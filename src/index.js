@@ -1,9 +1,9 @@
 require('dotenv').config();
 
-const { logger } = require('./utils/logger');
-const { AvailabilityChecker } = require('./availability-checker');
 const { sendEmail, sendPushbullet, sendSms } = require('./actions');
+const { AvailabilityChecker } = require('./availability-checker');
 const { cronSchedule } = require('./config');
+const { logger } = require('./logger');
 const { Amazon } = require('./scrappers/amazon');
 const { BestBuy } = require('./scrappers/bestbuy');
 const { GameStop } = require('./scrappers/gamestop');

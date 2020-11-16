@@ -1,6 +1,6 @@
 const path = require('path');
 const { createLogger, format, transports } = require('winston');
-const { logLevel, logsDirectory, nodeEnv } = require('../config');
+const { logLevel, logsDirectory, nodeEnv } = require('./config');
 
 const { combine, timestamp } = format;
 
