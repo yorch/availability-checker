@@ -6,8 +6,9 @@ services:
     container_name: availability-checker
     restart: unless-stopped
     volumes:
-      - logs:/app/logs
-      - ./servers.json:/app/servers.json
+      - ./logs:/app/logs
+      - ./screenshots:/app/screenshots
+      - ./products.json:/app/products.json
     env_file: .env
 
 volumes:
