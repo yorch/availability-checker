@@ -1,7 +1,9 @@
+const path = require('path');
 const { chromium } = require('playwright-chromium');
 const { snakeCase } = require('snake-case');
+const { scrapper, screenshotsDirectory } = require('../config');
+const { formatCurrentDateTime } = require('../utils');
 const { BaseScrapper } = require('./base-scrapper');
-const { scrapper } = require('../config');
 
 class BaseDynamicScrapper extends BaseScrapper {
     async preAll() {
@@ -33,7 +35,11 @@ class BaseDynamicScrapper extends BaseScrapper {
             this.logger.debug(`Page loaded ${url}`);
             if (scrapper.saveScreenshot) {
                 await page.screenshot({
-                    path: `screenshots/${this.name}/${snakeCase(name)}-${Date.now()}.png`,
+                    path: path.join(
+                        screenshotsDirectory,
+                        this.name,
+                        `${snakeCase(name)}-${formatCurrentDateTime()}.png`
+                    ),
                     fullPage: true,
                 });
             }

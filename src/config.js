@@ -2,7 +2,9 @@ const { env } = process;
 
 module.exports = {
     cronSchedule: env.CRON_SCHEDULE,
+    dataDirectory: env.DATA_DIR || './data',
     logsDirectory: env.LOGS_DIR || './logs',
+    screenshotsDirectory: env.SCREENSHOTS_DIR || './screenshots',
     logLevel: env.LOG_LEVEL || 'info',
     nodeEnv: env.NODE_ENV || 'development',
     scrapper: {

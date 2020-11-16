@@ -1,5 +1,9 @@
+const path = require('path');
+const jsonfile = require('jsonfile');
 const cron = require('node-cron');
+const { dataDirectory } = require('./config');
 const products = require('./products.json');
+const { formatCurrentDateTime } = require('./utils');
 
 class AvailabilityChecker {
     constructor({ actions, logger, scrappers }) {
@@ -13,6 +17,7 @@ class AvailabilityChecker {
     async run() {
         try {
             this.logger.info('Starting run');
+
             const promises = this.scrappers
                 .map(async (Scrapper) => {
                     const scrapper = new Scrapper({ logger: this.logger });
@@ -33,7 +38,7 @@ class AvailabilityChecker {
             if (!allProducts || allProducts.length === 0) {
                 this.logger.error('Could not process any product');
             } else {
-                this.logger.info(JSON.stringify(allProducts, null, 2));
+                this.saveResult(allProducts);
                 const availableProducts = allProducts.filter(({ isAvailable }) => isAvailable);
                 this.logger.info(`Processed ${allProducts.length} products (${availableProducts.length} available)`);
 
@@ -45,7 +50,18 @@ class AvailabilityChecker {
             }
             this.logger.info('Finished run');
         } catch (err) {
+            console.error(err);
             this.logger.error('There was an error on the main run', err);
+        }
+    }
+
+    async saveResult(resultJson) {
+        try {
+            const file = path.join(dataDirectory, `result-${formatCurrentDateTime()}.json`);
+            this.logger.info(`Saving results to file ${file}`);
+            await jsonfile.writeFile(file, resultJson, { spaces: 2 });
+        } catch (err) {
+            this.logger.error('Could not save result file', err);
         }
     }
 
