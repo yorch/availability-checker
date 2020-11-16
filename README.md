@@ -1,6 +1,6 @@
 # Availability Checker
 
-[![Build Status](https://travis-ci.org/yorch/availability-checker.svg?branch=master)](https://travis-ci.org/yorch/availability-checker)
+[![](https://github.com/yorch/availability-checker/workflows/Docker/badge.svg)](https://github.com/yorch/availability-checker/actions?query=workflow%3ADocker)
 [![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=yorch/availability-checker)](https://dependabot.com)
 [![](https://images.microbadger.com/badges/image/yorch/availability-checker.svg)](https://microbadger.com/images/yorch/availability-checker)
 [![](https://images.microbadger.com/badges/version/yorch/availability-checker.svg)](https://microbadger.com/images/yorch/availability-checker)
