@@ -6,8 +6,8 @@ const {
 const sendPushbullet = ({ content, logger }) => {
     if (enable) {
         const pusher = new PushBullet(apiToken);
-        pusher.note(deviceId, noteTitle, content, (error, response) => {
-            if (error) {
+        pusher.note(deviceId, noteTitle, content, (err, response) => {
+            if (err) {
                 logger.error(`Could not send pushbullet`, err);
                 return;
             }

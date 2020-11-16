@@ -26,9 +26,8 @@ class BaseScrapper {
                 url,
                 ...this.parseHtml($document),
             };
-        } catch (error) {
-            console.error(error);
-            // this.logger.error(error);
+        } catch (err) {
+            this.logger.error(`Error processing ${name}: ${url}`, err);
         }
     }
 

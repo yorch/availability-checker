@@ -42,10 +42,8 @@ class BaseDynamicScrapper extends BaseScrapper {
                 url,
                 ...(await this.parseHtml(page.$.bind(page))),
             };
-        } catch (error) {
-            // TODO: Fix as this usually prints the error as undefined, have to use console.error
-            console.error(error);
-            // this.logger.error(error);
+        } catch (err) {
+            this.logger.error(`Error processing ${name}: ${url}`, err);
         } finally {
             page && (await page.close());
         }
