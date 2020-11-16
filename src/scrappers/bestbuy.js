@@ -4,7 +4,7 @@ const { BaseDynamicScrapper } = require('./base-dynamic-scrapper');
 class BestBuy extends BaseDynamicScrapper {
     name = 'bestbuy';
 
-    async parseHtml($) {
+    async parsePage($) {
         const availability = (await (await $('.add-to-cart-button')).textContent()).toLowerCase();
 
         return {

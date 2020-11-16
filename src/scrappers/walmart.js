@@ -3,7 +3,7 @@ const { BaseScrapper } = require('./base-scrapper');
 class Walmart extends BaseScrapper {
     name = 'walmart';
 
-    parseHtml($) {
+    parsePage($) {
         const $productOverview = $('#product-overview');
         const title = $('h1.prod-ProductTitle', $productOverview).text();
         const price = $('span[itemprop="price"]', $productOverview).attr('content');

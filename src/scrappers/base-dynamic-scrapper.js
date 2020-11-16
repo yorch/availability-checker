@@ -36,7 +36,7 @@ class BaseDynamicScrapper extends BaseScrapper {
                     fullPage: true,
                 });
             }
-            const product = await this.parseHtml(page.$.bind(page));
+            const product = await this.parsePage(page.$.bind(page));
             return {
                 name,
                 source: this.name,

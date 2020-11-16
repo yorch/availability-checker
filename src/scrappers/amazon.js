@@ -3,7 +3,7 @@ const { BaseScrapper } = require('./base-scrapper');
 class Amazon extends BaseScrapper {
     name = 'amazon';
 
-    parseHtml($) {
+    parsePage($) {
         const availability = this.trimString($('#availability').text()).toLowerCase();
 
         return {

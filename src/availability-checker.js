@@ -12,6 +12,7 @@ class AvailabilityChecker {
 
     async run() {
         try {
+            this.logger.info('Starting run');
             const promises = this.scrappers
                 .map(async (Scrapper) => {
                     const scrapper = new Scrapper({ logger: this.logger });
@@ -42,6 +43,7 @@ class AvailabilityChecker {
                     this.actions.forEach((action) => action({ content: message, logger: this.logger }));
                 });
             }
+            this.logger.info('Finished run');
         } catch (err) {
             this.logger.error('There was an error on the main run', err);
         }

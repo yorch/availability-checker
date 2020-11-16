@@ -11,11 +11,11 @@ class BaseScrapper {
 
     async postAll() {}
 
-    composeMessage({ name, title, availability, isAvailable, price, sku, source, url }) {
+    composeMessage({ title, availability, isAvailable, price, sku, source, url }) {
         return oneLine`
-            ${name} (${source}):
+            ${title} (${source}):
             ${isAvailable ? 'Available' : 'Not Available'}
-            (${availability}) ==> ${price} (${url})
+            (${availability}) => ${price} (${url})
         `;
     }
 
@@ -29,12 +29,13 @@ class BaseScrapper {
             const { body } = await got(url);
             this.logger.debug(`Obtained response from ${url}`);
             const $document = cheerio.load(body);
-            const product = this.parseHtml($document);
+            const product = this.parsePage($document);
+            const source = this.name;
             return {
                 name,
-                source: this.name,
+                source,
                 url,
-                message: this.composeMessage(product),
+                message: this.composeMessage({ ...product, name, source, url }),
                 ...product,
             };
         } catch (err) {
