@@ -22,10 +22,7 @@ class Target extends BaseDynamicScrapper {
             availability,
             price: this.trimString(await (await $('[data-test=product-price]')).textContent()),
             sku: '',
-            isAvailable: !(
-                availability &&
-                (availability.includes('sold out') || availability.includes('out of stock'))
-            ),
+            isAvailable: availability && !(availability.includes('sold out') || availability.includes('out of stock')),
         };
     }
 }

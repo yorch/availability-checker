@@ -1,6 +1,7 @@
 const cheerio = require('cheerio');
 const { oneLine } = require('common-tags');
-const { got } = require('../got');
+const got = require('got');
+const { scrapper } = require('../config');
 
 class BaseScrapper {
     constructor({ logger }) {
@@ -26,7 +27,19 @@ class BaseScrapper {
     async obtainProduct({ name, url }) {
         this.logger.debug(`Making request to ${url}`);
         try {
-            const { body } = await got(url);
+            const { body } = await got(url, {
+                headers: {
+                    'accept-language': 'en-US,en;q=0.9',
+                    'cache-control': 'no-cache',
+                    'user-agent': scrapper.userAgent,
+                },
+                followRedirect: true,
+                http2: true, // Needed by BestBuy
+                maxRedirects: 5,
+                timeout: scrapper.timeout,
+                retry: 1,
+                responseType: 'text',
+            });
             this.logger.debug(`Obtained response from ${url}`);
             const $document = cheerio.load(body);
             const product = await this.parsePage($document);

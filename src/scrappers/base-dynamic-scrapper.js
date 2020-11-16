@@ -24,12 +24,13 @@ class BaseDynamicScrapper extends BaseScrapper {
     async obtainProduct({ name, url }) {
         let page;
         try {
-            this.logger.debug(`Making request to ${url}`);
+            this.logger.debug(`Loading page ${url}`);
             page = await this.context.newPage();
             // page.on('console', async (c) => {
             //     console.log(c, c.args(), c.location(), c.type());
             // });
             await page.goto(url);
+            this.logger.debug(`Page loaded ${url}`);
             if (scrapper.saveScreenshot) {
                 await page.screenshot({
                     path: `screenshots/${this.name}/${snakeCase(name)}-${Date.now()}.png`,
