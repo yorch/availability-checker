@@ -37,9 +37,10 @@ class BaseDynamicScrapper extends BaseScrapper {
                 });
             }
             const product = await this.parsePage(page.$.bind(page));
+            const source = this.name;
             return {
                 name,
-                source: this.name,
+                source,
                 url,
                 message: this.composeMessage({ ...product, name, source, url }),
                 ...product,
