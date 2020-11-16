@@ -26,21 +26,28 @@ class AvailabilityChecker {
     }
 
     async run() {
-        const promises = this.scrappers.map(async (Scrapper) => {
-            const scrapper = new Scrapper({ logger: this.logger });
-            const { name } = scrapper;
-            this.logger.info(`Processing ${name}`);
-            const res = await scrapper.run(products.filter(({ source_name }) => name === source_name));
-            this.logger.info(`Finished processing ${name}`);
-            return res;
-        });
+        const promises = this.scrappers
+            .map(async (Scrapper) => {
+                const scrapper = new Scrapper({ logger: this.logger });
+                const { name } = scrapper;
+                this.logger.info(`Processing ${name}`);
+                try {
+                    const res = await scrapper.run(products.filter(({ source_name }) => name === source_name));
+                    this.logger.info(`Finished processing ${name}`);
+                    return res;
+                } catch (error) {
+                    this.logger.error(`Error processing ${name}`, error);
+                    // console.error(error);
+                }
+            })
+            .filter(Boolean);
 
         const allProducts = (await Promise.all(promises)).flat().filter(Boolean);
 
         if (!allProducts || allProducts.length === 0) {
             this.logger.error('Could not process any product');
         } else {
-            this.logger.info(JSON.stringify(allProducts));
+            this.logger.info(JSON.stringify(allProducts, null, 2));
             const availableProducts = allProducts.filter(({ isAvailable }) => isAvailable);
             this.logger.info(`Processed ${allProducts.length} products (${availableProducts.length} available)`);
             const messages = this._composeMessages(availableProducts);
