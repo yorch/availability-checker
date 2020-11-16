@@ -23,6 +23,14 @@ if (cronSchedule) {
     availabilityChecker.run();
 }
 
+process.on('uncaughtException', (err) => {
+    logger.error(`There was an uncaughtException`, err);
+});
+
+process.on('unhandledRejection', (err) => {
+    logger.error('There was an unhandledRejection', err);
+});
+
 process.on('SIGTERM', () => {
     logger.info('Got a SIGTERM, exiting');
     process.exit(1);
