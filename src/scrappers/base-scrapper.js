@@ -1,4 +1,5 @@
 const cheerio = require('cheerio');
+const { oneLine } = require('common-tags');
 const { got } = require('../got');
 
 class BaseScrapper {
@@ -10,6 +11,14 @@ class BaseScrapper {
 
     async postAll() {}
 
+    composeMessage({ name, title, availability, isAvailable, price, sku, source, url }) {
+        return oneLine`
+            ${name} (${source}):
+            ${isAvailable ? 'Available' : 'Not Available'}
+            (${availability}) ==> ${price} (${url})
+        `;
+    }
+
     trimString(str) {
         return (str || '').trim().replace(/\n/g, '');
     }
@@ -20,14 +29,16 @@ class BaseScrapper {
             const { body } = await got(url);
             this.logger.debug(`Obtained response from ${url}`);
             const $document = cheerio.load(body);
+            const product = this.parseHtml($document);
             return {
                 name,
                 source: this.name,
                 url,
-                ...this.parseHtml($document),
+                message: this.composeMessage(product),
+                ...product,
             };
         } catch (err) {
-            this.logger.error(`Error processing ${name}: ${url}`, err);
+            this.logger.error(`Error processing ${name} at ${this.name}: ${url}`, err);
         }
     }
 
@@ -35,7 +46,7 @@ class BaseScrapper {
         await this.preAll();
         const res = await Promise.all(products.map(this.obtainProduct.bind(this)));
         await this.postAll();
-        return res;
+        return res.filter(Boolean);
     }
 }
 

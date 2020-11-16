@@ -36,14 +36,16 @@ class BaseDynamicScrapper extends BaseScrapper {
                     fullPage: true,
                 });
             }
+            const product = await this.parseHtml(page.$.bind(page));
             return {
                 name,
                 source: this.name,
                 url,
-                ...(await this.parseHtml(page.$.bind(page))),
+                message: this.composeMessage(product),
+                ...product,
             };
         } catch (err) {
-            this.logger.error(`Error processing ${name}: ${url}`, err);
+            this.logger.error(`Error processing ${name} at ${this.name}: ${url}`, err);
         } finally {
             page && (await page.close());
         }

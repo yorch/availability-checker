@@ -1,4 +1,3 @@
-const { oneLine } = require('common-tags');
 const cron = require('node-cron');
 const products = require('./products.json');
 
@@ -11,52 +10,40 @@ class AvailabilityChecker {
         this.logger.debug('scrappers', this.scrappers);
     }
 
-    _composeMessages(products) {
-        return products.map(
-            ({ name, title, availability, isAvailable, price, sku, source, url }) => oneLine`
-                ${name}
-                (${source}):
-                ${isAvailable ? 'Available' : 'Not Available'}
-                (${availability})
-                ==>
-                ${price}
-                (${url})
-            `
-        );
-    }
-
     async run() {
-        const promises = this.scrappers
-            .map(async (Scrapper) => {
-                const scrapper = new Scrapper({ logger: this.logger });
-                const { name } = scrapper;
-                this.logger.info(`Processing ${name}`);
-                try {
-                    const res = await scrapper.run(products.filter(({ source_name }) => name === source_name));
-                    this.logger.info(`Finished processing ${name}`);
-                    return res;
-                } catch (error) {
-                    this.logger.error(`Error processing ${name}`, error);
-                    // console.error(error);
-                }
-            })
-            .filter(Boolean);
+        try {
+            const promises = this.scrappers
+                .map(async (Scrapper) => {
+                    const scrapper = new Scrapper({ logger: this.logger });
+                    const { name } = scrapper;
+                    this.logger.info(`Processing ${name}`);
+                    try {
+                        const res = await scrapper.run(products.filter(({ source_name }) => name === source_name));
+                        this.logger.info(`Finished processing ${name}`);
+                        return res;
+                    } catch (error) {
+                        this.logger.error(`Error processing ${name}`, error);
+                    }
+                })
+                .filter(Boolean);
 
-        const allProducts = (await Promise.all(promises)).flat().filter(Boolean);
+            const allProducts = (await Promise.all(promises)).flat().filter(Boolean);
 
-        if (!allProducts || allProducts.length === 0) {
-            this.logger.error('Could not process any product');
-        } else {
-            this.logger.info(JSON.stringify(allProducts, null, 2));
-            const availableProducts = allProducts.filter(({ isAvailable }) => isAvailable);
-            this.logger.info(`Processed ${allProducts.length} products (${availableProducts.length} available)`);
-            const messages = this._composeMessages(availableProducts);
+            if (!allProducts || allProducts.length === 0) {
+                this.logger.error('Could not process any product');
+            } else {
+                this.logger.info(JSON.stringify(allProducts, null, 2));
+                const availableProducts = allProducts.filter(({ isAvailable }) => isAvailable);
+                this.logger.info(`Processed ${allProducts.length} products (${availableProducts.length} available)`);
 
-            // TODO: Maybe consolidate multiple messages into same action (ie: same email)
-            messages.forEach((message) => {
-                this.logger.info(message);
-                this.actions.forEach((action) => action({ content: message, logger: this.logger }));
-            });
+                // TODO: Maybe consolidate multiple messages into same action (ie: same email)
+                availableProducts.forEach(({ message }) => {
+                    this.logger.info(message);
+                    this.actions.forEach((action) => action({ content: message, logger: this.logger }));
+                });
+            }
+        } catch (err) {
+            this.logger.error('There was an error on the main run', err);
         }
     }
 
