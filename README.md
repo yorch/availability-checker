@@ -1,11 +1,10 @@
 # Availability Checker
 
 [![](https://github.com/yorch/availability-checker/workflows/Docker/badge.svg)](https://github.com/yorch/availability-checker/actions?query=workflow%3ADocker)
-[![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=yorch/availability-checker)](https://dependabot.com)
 [![](https://images.microbadger.com/badges/image/yorch/availability-checker.svg)](https://microbadger.com/images/yorch/availability-checker)
 [![](https://images.microbadger.com/badges/version/yorch/availability-checker.svg)](https://microbadger.com/images/yorch/availability-checker)
 
-This is a NodeJS application that checks for the availability of products across differnent sources (according to `products.json` config file) and if they are in stock, it can trigger:
+This is a NodeJS application that checks for the availability of products across different sources (according to `products.json` config file) and if they are in stock, it can trigger:
 
 -   An email through a configured SMTP server.
 -   An SMS message through Twilio.
