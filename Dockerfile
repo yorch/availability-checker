@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/playwright:focal
+FROM mcr.microsoft.com/playwright:bionic
 
 ARG BUILD_DATE
 ARG VCS_REF
