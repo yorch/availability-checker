@@ -34,7 +34,7 @@ module.exports = {
     },
     sms: {
         enable: env.SMS_ENABLE === 'true',
-        toNumber: env.SMS_TO_NUMBER,
+        toNumbers: env.SMS_TO_NUMBERS,
         twilio: {
             accountSid: env.TWILIO_ACCOUNT_SID,
             from: env.TWILIO_FROM,

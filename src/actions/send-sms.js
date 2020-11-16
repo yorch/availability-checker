@@ -4,7 +4,7 @@ const {
     sms: {
         enable,
         twilio: { accountSid, from, secret, sid },
-        toNumber,
+        toNumbers,
     },
 } = require('../config');
 
@@ -23,7 +23,7 @@ const sendSms = ({ content, logger }) => {
 
     return smsSender.sendSms({
         body: content,
-        recipients: toNumber.split(','),
+        recipients: toNumbers.split(','),
     });
 };
 
