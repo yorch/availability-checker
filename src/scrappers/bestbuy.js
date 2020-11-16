@@ -1,4 +1,3 @@
-const { BaseScrapper } = require('./base-scrapper');
 const { BaseDynamicScrapper } = require('./base-dynamic-scrapper');
 
 class BestBuy extends BaseDynamicScrapper {

@@ -29,7 +29,7 @@ class BaseScrapper {
             const { body } = await got(url);
             this.logger.debug(`Obtained response from ${url}`);
             const $document = cheerio.load(body);
-            const product = this.parsePage($document);
+            const product = await this.parsePage($document);
             const source = this.name;
             return {
                 name,
