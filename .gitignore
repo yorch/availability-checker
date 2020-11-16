@@ -1,3 +1,4 @@
+data/*.json
 logs/
 node_modules/
 screenshots/*/*.png
