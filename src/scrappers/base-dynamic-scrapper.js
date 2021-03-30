@@ -1,6 +1,7 @@
 const path = require('path');
 const { chromium } = require('playwright-chromium');
 const { snakeCase } = require('snake-case');
+const UserAgent = require('user-agents');
 const { scrapper, screenshotsDirectory } = require('../config');
 const { formatCurrentDateTime } = require('../utils');
 const { BaseScrapper } = require('./base-scrapper');
@@ -14,7 +15,7 @@ class BaseDynamicScrapper extends BaseScrapper {
         this.context = await this.browser.newContext({
             bypassCSP: true,
             ignoreHTTPSErrors: true,
-            userAgent: scrapper.userAgent,
+            userAgent: new UserAgent().toString(),
         });
     }
 

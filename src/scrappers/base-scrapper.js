@@ -1,6 +1,7 @@
 const cheerio = require('cheerio');
 const { oneLine } = require('common-tags');
 const got = require('got');
+const UserAgent = require('user-agents');
 const { scrapper } = require('../config');
 
 class BaseScrapper {
@@ -31,7 +32,7 @@ class BaseScrapper {
                 headers: {
                     'accept-language': 'en-US,en;q=0.9',
                     'cache-control': 'no-cache',
-                    'user-agent': scrapper.userAgent,
+                    'user-agent': new UserAgent().toString(),
                 },
                 followRedirect: true,
                 http2: true, // Needed by BestBuy

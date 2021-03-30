@@ -24,6 +24,7 @@
     "pushbullet": "2.4.0",
     "simple-sms-sender": "0.0.3",
     "snake-case": "3.0.4",
+    "user-agents": "1.0.605",
     "winston": "3.3.3"
   },
   "devDependencies": {},
