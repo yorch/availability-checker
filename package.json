@@ -15,7 +15,7 @@
     "common-tags": "1.8.0",
     "date-fns": "2.25.0",
     "dotenv": "10.0.0",
-    "got": "11.8.2",
+    "got": "11.8.5",
     "jsonfile": "6.1.0",
     "lodash": "4.17.21",
     "node-cron": "3.0.0",
