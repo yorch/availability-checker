@@ -24,7 +24,8 @@ RUN wget -q https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VE
 
 WORKDIR /app
 
-COPY package.json yarn.lock ./
+COPY package.json yarn.lock .yarnrc.yml  ./
+COPY .yarn                               ./.yarn
 RUN yarn install --immutable \
     && yarn cache clean
 COPY src ./src
