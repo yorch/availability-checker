@@ -6,16 +6,16 @@
 
 This is a NodeJS application that checks for the availability of products across different sources (according to `products.json` config file) and if they are in stock, it can trigger:
 
--   An email through a configured SMTP server.
--   An SMS message through Twilio.
--   A PushBullet notification.
+- An email through a configured SMTP server.
+- An SMS message through Twilio.
+- A PushBullet notification.
 
 ## Configuration
 
 All the configuration can be made through two files:
 
--   `.env` -> Where all the credentials and other config are stored (ie: SMTP, Twilio API, Pushbullet, etc). Create your own `.env` file from `.env.sample`.
--   `products.json` -> Where you can add the products you want to monitor.
+- `.env` -> Where all the credentials and other config are stored (ie: SMTP, Twilio API, Pushbullet, etc). Create your own `.env` file from `.env.sample`.
+- `products.json` -> Where you can add the products you want to monitor.
 
 ## Run with NodeJS
 
