@@ -160,7 +160,7 @@ __metadata:
     jsonfile: 6.1.0
     lodash: 4.17.21
     node-cron: 3.0.2
-    nodemailer: 6.7.8
+    nodemailer: 6.9.9
     playwright-chromium: 1.25.1
     pushbullet: 2.4.0
     simple-sms-sender: 0.1.1
@@ -1121,10 +1121,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nodemailer@npm:6.7.8":
-  version: 6.7.8
-  resolution: "nodemailer@npm:6.7.8"
-  checksum: 92d4a1d48813825989c7f5fc7cbcf5ba8d1a8acf8e10e420b4aa7670ade7abd0c543cc6cf8adf14e44c62552e26efb37b2a15a9af90a515fa90b40ffc71c433e
+"nodemailer@npm:6.9.9":
+  version: 6.9.9
+  resolution: "nodemailer@npm:6.9.9"
+  checksum: 9af862b497273796ad6ba7ca9eac23a7d69737554f6dd51cfd3557f60902c56344158192672f1208daf00340a47a9e1805bd809965edc191011b35dd98a74be1
   languageName: node
   linkType: hard
 
