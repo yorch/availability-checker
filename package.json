@@ -17,7 +17,7 @@
     "dotenv": "16.4.7",
     "got": "11.8.6",
     "jsonfile": "6.1.0",
-    "lodash": "4.17.21",
+    "lodash": "4.17.23",
     "node-cron": "3.0.3",
     "nodemailer": "6.10.0",
     "playwright-chromium": "1.51.1",
